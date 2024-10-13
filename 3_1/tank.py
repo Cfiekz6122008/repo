@@ -1,10 +1,11 @@
-
+from hitbox import Hitbox
 # 2 задача размесить танки на канвасе,
 # добавить переменные класса (количество созданных танков, размер танка)
 class Tank:
     count = 0 # общее количество изготовленных танков
     SIZE = 100  # размер танка
     def __init__(self, canvas, x, y,model = 'Т-14 Армата', ammo = 100, speed = 10):
+        self.__hitbox = Hitbox(x, y, Tank.SIZE, Tank.SIZE)
         self.canvas = canvas
         Tank.count += 1
         self.model = model
@@ -32,6 +33,7 @@ class Tank:
     def forvard(self):  # по оси y вверх
         if self.fuel > 0:
             self.y += -self.speed
+            self.__update_hitbox()
             self.fuel -= 1
             self.repaint()  # перерисовка танка
             print(self)
@@ -39,6 +41,7 @@ class Tank:
     def backward(self): # по оси y вниз
         if self.fuel > 0:
             self.y += self.speed
+            self.__update_hitbox()
             self.fuel -= 1
             self.repaint()  # перерисовка танка
             print(self)
@@ -46,6 +49,7 @@ class Tank:
     def left(self):  # по оси x влево
         if self.fuel > 0:
             self.x += -self.speed
+            self.__update_hitbox()
             self.fuel -= 1
             self.repaint()  # перерисовка танка
             print(self)
@@ -53,6 +57,7 @@ class Tank:
     def right(self): # по оси x вправо
         if self.fuel > 0:
             self.x += self.speed
+            self.__update_hitbox()
             self.fuel -= 1
             self.repaint()  # перерисовка танка
             print(self)
@@ -63,6 +68,12 @@ class Tank:
 
     def repaint(self):
         self.canvas.moveto(self.id, x = self.x, y = self.y)
+
+    def __update_hitbox(self):
+        self.__hitbox.moveto(self.x, self.y)
+
+    def intersects(self, other_tank):
+        return self.__hitbox.intersects(other_tank.__hitbox)
 
     def __str__(self):
         return f'координаты: x = {self.x}, y = {self.y}, модель: {self.model}, здоровье: {self.hp}, опыт: {self.xp}, боеприпасы: {self.ammo}'
