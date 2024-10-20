@@ -1,7 +1,7 @@
 from hitbox import Hitbox
 
 from tank import Tank
-from tkinter import*
+from tkinter import *
 
 
 
@@ -9,6 +9,13 @@ KEY_W = 87
 KEY_S = 83
 KEY_A = 65
 KEY_D = 68
+
+FPS = 60
+
+def update():
+    player.update()
+    check_collision()
+    w.after(1000//FPS, update)
 
 def check_collision():
     if player.intersects(enemy):
@@ -37,5 +44,6 @@ enemy = Tank(canvas = canv, x = 300, y = 300, ammo = 100)
 
 w.bind('<KeyPress>', key_press)
 
+update()
 w.mainloop()
 
