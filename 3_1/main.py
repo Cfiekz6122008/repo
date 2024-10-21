@@ -1,4 +1,4 @@
-from hitbox import Hitbox
+
 
 from tank import Tank
 from tkinter import *
@@ -18,8 +18,9 @@ def update():
     w.after(1000//FPS, update)
 
 def check_collision():
-    if player.intersects(enemy):
-        print('Танки столкнулись')
+        if player.intersects(enemy):
+            print('Танки столкнулись')
+            player.undo_move()
 
 def key_press(event):
     if event.keycode == KEY_W:
@@ -31,6 +32,8 @@ def key_press(event):
     if event.keycode == KEY_D:
         player.right()
     check_collision()
+
+
 
 w = Tk()
 w.title('Танки на минималках 2.0')
