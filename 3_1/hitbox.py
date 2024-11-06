@@ -1,5 +1,6 @@
 class Hitbox:
-    def __init__(self, x, y, width, heigth):
+    def __init__(self, x, y, width, heigth, padding = 0):
+        self.pad = padding
 
         self.__x = x
         self.__y = y
@@ -45,8 +46,7 @@ class Hitbox:
         self.__set_y(dy + self.__get_y())
 
 
-    def __str__(self):
-        return f"({self.__x=}, {self.__y=}, {self.__width=}, {self.__height=})"
+
 
     def intersects(self, other):
         if self.left > other.right:
@@ -60,16 +60,21 @@ class Hitbox:
         return True
 
     def __get_top(self):
-        return self.y
+        return self.y + self.pad
 
     def __get_bottom(self):
-        return self.y + self.heigth
+        return self.y + self.heigth - self.pad
 
     def __get_left(self):
-        return self.x
+        return self.x + self.pad
 
     def __get_right(self):
-        return self.x + self.width
+        return self.x + self.width  - self.pad
+
+
+
+    def __str__(self):
+        return f"({self.__x=}, {self.__y=}, {self.__width=}, {self.__height=})"
 
     x = property(__get_x, __set_x)
     y = property(__get_y, __set_y)
