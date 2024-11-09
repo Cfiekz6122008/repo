@@ -1,7 +1,8 @@
 from tank import Tank
 from tkinter import *
+import world
 
-
+KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN = 37, 39, 38, 40
 
 KEY_W = 87
 KEY_S = 83
@@ -13,8 +14,11 @@ FPS = 60
 def update():
     player.update()
     enemy.update()
+    neutral.update()
     check_collision()
     w.after(1000//FPS, update)
+
+    world.set_camera_xy(player.get_x()-world.SCREEN_WIDTH//2 + player.get_size()//2, player.get_y()-world.SCREEN_HEIGHT//2 + player.get_size()//2)
 
 def check_collision():
          player.intersects(enemy)
@@ -30,19 +34,33 @@ def key_press(event):
         player.left()
     if event.keycode == KEY_D:
         player.right()
+    elif event.keycode == KEY_UP:
+        world.move_camera(0, -5)
+    elif event.keycode == KEY_DOWN:
+        world.move_camera(0, 5)
+    elif event.keycode == KEY_LEFT:
+        world.move_camera(-5, 0)
+    elif event.keycode == KEY_RIGHT:
+        world.move_camera(5, 0)
     check_collision()
+
+
 
 
 
 w = Tk()
 w.title('Танки на минималках 2.0')
-canv = Canvas(w, width = 800, height = 600, bg = 'alice blue')
+canv = Canvas(w, width=world.SCREEN_WIDTH, height=world.SCREEN_HEIGHT, bg = 'alice blue')
 canv.pack()
 player = Tank(canvas = canv, x = 100, y = 50, ammo = 100, speed=1,bot = False )
 
 enemy = Tank(canvas = canv, x = 300, y = 300, ammo = 100,bot = True )
 
+neutral = Tank(canvas = canv, x = 500, y = 450, ammo = 100, speed=1,bot = False )
+neutral.stop()
+
 enemy.set_target(player)
+
 
 
 
