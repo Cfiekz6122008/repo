@@ -146,7 +146,7 @@ class Tank:
     def __update_hitbox(self):
         self.__hitbox.moveto(self.__x, self.__y)
 
-    def inersects(self, other_tank):
+    def intersects(self, other_tank):
         value = self.__hitbox.intersects(other_tank.__hitbox)
         if value:
             self.__undo_move()
@@ -194,6 +194,13 @@ class Tank:
             self.__undo_move()
             if self.__bot:
                 self.__AI_change_orientation()
+
+    def __del__(self):
+        print(f'танк удален')
+        try:
+            self.__canvas.delete(self.__id)
+        except Exception:
+            pass
 
     def __str__(self):
         return (f'координаты: x = {self.__x}, y = {self.__y}, модель: {self.__model}, '
