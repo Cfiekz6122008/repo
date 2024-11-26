@@ -65,7 +65,7 @@ def load_textures():
 w = Tk()
 load_textures()
 w.title('Танки на минималках 2.0')
-canv = Canvas(w, width = world.WIDTH, height = world.HEIGHT, bg ='alice blue')
+canv = Canvas(w, width = world.WIDTH, height = world.HEIGHT, bg ='#8ccb5e')
 canv.pack()
 world.initialize(canv)
 
