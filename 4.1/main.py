@@ -24,6 +24,7 @@ def update():
     world.set_camera_xy(player.get_x() - world.SCREEN_WIDTH // 2 + player.get_size() // 2,
                         player.get_y() - world.SCREEN_HEIGHT // 2 + player.get_size() // 2)
     tank_collection.update()
+    world.update_map()
     w.after(1000//FPS, update)
 
 

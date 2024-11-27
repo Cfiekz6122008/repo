@@ -80,6 +80,16 @@ def get_screen_x(world_X):
 def get_screen_y(world_Y):
     return world_Y - _camera_y
 
+def update_map():
+    for i in range(0, get_rows()):
+        for j in range(0, get_cols()):
+            update_cell(i, j)
+def update_cell(row, col):
+    if row < 0 or col < 0 or row >= get_rows() or col >= get_cols():
+        return
+    _map[row][col].update()
+
+
 class _Cell:
     def __init__(self, canvas, block, x, y):
         self.__canvas = canvas
@@ -100,6 +110,14 @@ class _Cell:
 
     def get_block(self):
         return self.__block
+
+    def update(self):
+        if self.__block == GROUND:
+            return
+        screen_x = get_screen_x(self.__x)
+        screen_y = get_screen_y(self.__y)
+        self.__canvas.moveto(self.__id, x=screen_x, y=screen_y)
+
 
 
 
