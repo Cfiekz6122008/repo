@@ -44,8 +44,7 @@ def get_block(row, col):
     if row < 0 or col < 0 or row >= get_rows() or col >= get_cols():
         return AIR
     else:
-        return _map[row][co
-        l].get_block()
+        return _map[row][col].get_block()
 
 
 def get_width():
